@@ -10,13 +10,13 @@ import {
 
 const KEY_WORD = getParam(
   'key_ld_word',
-  'u',
+  'm',
   'string',
   'what key to use when indicating "word" in LD task',
 );
 const KEY_NON_WORD = getParam(
   'key_ld_non_word',
-  'j',
+  'x',
   'string',
   'what key to use when indicating "non word" in LD task',
 );
@@ -38,24 +38,29 @@ const KEYS_DP = [KEY_UPPER, KEY_LOWER];
 
 const LD_LENGTH_PRACTICE = getParam(
   'number_ld_practice',
-  4,
+  20,
   'number',
   'How many lexical decision trials to practice with',
 );
 const LD_LENGTH_TEST = getParam(
   'number_ld_test',
-  10,
+  540,
   'number',
   'How many lexical decision trials to show in each block',
 );
 
 const DP_LENGTH_PRACTICE = getParam(
   'number_dp_practice',
-  4,
+  20,
   'number',
   'How many dotprobe trials to practice with',
 );
-const DP_LENGTH_TEST = getParam('number_dp_test', 10, 'number', 'How many dotprobe trials to show');
+const DP_LENGTH_TEST = getParam(
+  'number_dp_test',
+  580,
+  'number',
+  'How many dotprobe trials to show',
+);
 
 const offsetScreencenterDP = 0.2;
 const canvasFontSizeRatio = 0.025;
@@ -65,7 +70,7 @@ const wordListsLD = {
   threat: {
     proportion: getParam(
       'ld_proportion_threat',
-      0.4,
+      0.25,
       'number',
       'How many lexical decision trials should be threats',
     ),
@@ -74,7 +79,7 @@ const wordListsLD = {
   neutral: {
     proportion: getParam(
       'ld_proportion_neutral',
-      0.2,
+      0.25,
       'number',
       'How many lexical decision trials should be neutral',
     ),
@@ -83,7 +88,7 @@ const wordListsLD = {
   nonword: {
     proportion: getParam(
       'ld_proportion_nonword',
-      0.4,
+      0.5,
       'number',
       'How many lexical decision trials should be non-words',
     ),
@@ -104,7 +109,6 @@ const wordPairsDP = [
   ['neutral10', 'threat10'],
   ['neutral11', 'threat11'],
   ['neutral12', 'threat12'],
-  ['neutral13', 'threat13'],
 ];
 
 const interventionGroup = Math.random() < 0.5;
@@ -118,25 +122,28 @@ function initCanvas(ctx, w, h) {
 
 function createLDTimeline(n: number) {
   return [
-    ...canvasCountdown(5),
     ...Object.entries(wordListsLD)
       .map(([type, val]) =>
-        val.list.sample(Math.round(val.proportion * n)).map((word) => ({
-          word,
-          type,
-          correctKey: type === 'nonword' ? KEY_NON_WORD : KEY_WORD,
-        })),
+        val.list
+          .pipe((arr) => {
+            if (arr.length === Math.round(val.proportion * n)) {
+              console.log(
+                'Number of LD trials as long as trial portion, using provided list as is',
+              );
+              return arr.shuffle();
+            }
+            console.log('Number of LD trials as NOT long as trial portion, sampling');
+            return arr.sample(Math.round(val.proportion * n));
+          })
+          .map((word) => ({
+            word,
+            type,
+            correctKey: type === 'nonword' ? KEY_NON_WORD : KEY_WORD,
+          })),
       )
       .flat()
       .shuffle()
       .map((wordObj: any) => [
-        {
-          draw: (ctx, w, h) => {
-            ctx.fillText('+', w / 2, h / 2);
-          },
-          displayDuration: 500,
-          ignoreData: true,
-        },
         {
           draw: (ctx, w, h) => {
             ctx.fillStyle = 'black';
@@ -170,9 +177,15 @@ function createDPTimeline(n: number) {
   const threatCount = Math.round(adjustedN * threatPercentage);
 
   return [
-    ...canvasCountdown(5),
     ...wordPairsDP
-      .sample(adjustedN)
+      .pipe((arr) => {
+        if (arr.length === adjustedN) {
+          console.log('Number of DP trials as long as wordpair list, using provided list as is');
+          return arr.shuffle();
+        }
+        console.log('Number of DP trials NOT as long as word list, sampling');
+        return arr.sample(adjustedN);
+      })
       .map((v, index) => ({
         words: v,
         upper: index < adjustedN / 2,
@@ -272,6 +285,102 @@ function keyInstructions(keys: string[], upperText: string, lowerText: string) {
       Press any of the keys to start the task.
     </>
   );
+}
+
+function createMegablockDP(ntrials: number, nblocks: number) {
+  return createDPTimeline(ntrials)
+    .chunk(nblocks)
+    .map((x) => [...canvasCountdown(3), ...x])
+    .map((timelineChunk, i) => [
+      {
+        type: 'Text',
+        props: {
+          buttonText: null,
+          allowedKeys: KEYS_DP,
+          content: (
+            <>
+              <h1>
+                Get ready for Block {i + 1}/{nblocks}
+              </h1>
+              {i === 0 && (
+                <>
+                  Let's start the actual round. Remember, in this task you will have to indicate the
+                  position of a dot that appears after a word pair. <br />
+                </>
+              )}
+              {i !== 0 && (
+                <>
+                  {' '}
+                  You can now take a quick break. Continue the trial once you feel ready <br />
+                </>
+              )}{' '}
+              {keyInstructions(
+                KEYS_DP,
+                'if the dot appears above the +.',
+                'if the dot appears below the +.',
+              )}
+            </>
+          ),
+        },
+      },
+      {
+        name: `DotProbeTask_Block_${i + 1}`,
+        type: 'CanvasBlock',
+        props: {
+          timeline: timelineChunk,
+          initCanvas,
+        },
+      },
+    ])
+    .flat();
+}
+
+function createMegablockLD(index: number, ntrials: number, nblocks: number) {
+  return createLDTimeline(ntrials)
+    .chunk(nblocks)
+    .map((x) => [...canvasCountdown(3), ...x])
+    .map((timelineChunk, i) => [
+      {
+        type: 'Text',
+        props: {
+          buttonText: null,
+          allowedKeys: KEYS_LD,
+          content: (
+            <>
+              <h1>
+                Get ready for Block {i + 1}/{nblocks}
+              </h1>
+              {i === 0 && (
+                <>
+                  Let's get into the real task. Just like before, you will have to decide if the
+                  string you see is a word or not and press a key in response. <br />
+                </>
+              )}
+              {i !== 0 && (
+                <>
+                  {' '}
+                  You can now take a quick break. Continue the trial once you feel ready <br />
+                </>
+              )}{' '}
+              {keyInstructions(
+                KEYS_LD,
+                'if the string you see is a word.',
+                'if the string you see is a non-word.',
+              )}
+            </>
+          ),
+        },
+      },
+      {
+        name: `LexicalDecicionTask${index}_Block_${i + 1}`,
+        type: 'CanvasBlock',
+        props: {
+          timeline: timelineChunk,
+          initCanvas,
+        },
+      },
+    ])
+    .flat();
 }
 
 const experiment = subsetExperimentByParam([
@@ -393,37 +502,11 @@ const experiment = subsetExperimentByParam([
     name: 'LexicalDecicionTaskPractice',
     type: 'CanvasBlock',
     props: {
-      timeline: createLDTimeline(LD_LENGTH_PRACTICE),
+      timeline: [...canvasCountdown(3), ...createLDTimeline(LD_LENGTH_PRACTICE)],
       initCanvas,
     },
   },
-  {
-    type: 'Text',
-    props: {
-      buttonText: null,
-      allowedKeys: KEYS_LD,
-      content: (
-        <>
-          <h1>Get ready</h1>
-          Let's get into the real task. Just like before, you will have to decide if the string you
-          see is a word or not and press a key in response. <br />{' '}
-          {keyInstructions(
-            KEYS_LD,
-            'if the string you see is a word.',
-            'if the string you see is a non-word.',
-          )}
-        </>
-      ),
-    },
-  },
-  {
-    name: 'LexicalDecicionTask1',
-    type: 'CanvasBlock',
-    props: {
-      timeline: createLDTimeline(LD_LENGTH_TEST),
-      initCanvas,
-    },
-  },
+  ...createMegablockLD(1, LD_LENGTH_TEST, 2),
   {
     type: 'Text',
     props: {
@@ -447,64 +530,27 @@ const experiment = subsetExperimentByParam([
     name: 'DotProbeTaskPractice',
     type: 'CanvasBlock',
     props: {
-      timeline: createDPTimeline(DP_LENGTH_PRACTICE),
+      timeline: [...canvasCountdown(3), ...createDPTimeline(DP_LENGTH_PRACTICE)],
       initCanvas,
     },
   },
+  ...createMegablockDP(DP_LENGTH_TEST, 4),
   {
     type: 'Text',
     props: {
       buttonText: null,
-      allowedKeys: KEYS_DP,
+      allowedKeys: true,
       content: (
         <>
-          <h1>Get ready</h1>
-          Let's start the actual round. Remember, in this task you will have to indicate the
-          position of a dot that appears after a word pair. <br />{' '}
-          {keyInstructions(
-            KEYS_DP,
-            'if the dot appears above the +.',
-            'if the dot appears below the +.',
-          )}
-        </>
-      ),
-    },
-  },
-  {
-    name: 'DotProbeTask',
-    type: 'CanvasBlock',
-    props: {
-      timeline: createDPTimeline(DP_LENGTH_TEST),
-      initCanvas,
-    },
-  },
-  {
-    type: 'Text',
-    props: {
-      buttonText: null,
-      allowedKeys: KEYS_LD,
-      content: (
-        <>
-          <h1>Get ready</h1>
+          <h1>One more task</h1>
           For our last task, we will go back to the first task. Just like before, you will have to
-          decide if the string you see is a word or not and press a key in response. <br />{' '}
-          {keyInstructions(
-            KEYS_LD,
-            'if the string you see is a word.',
-            'if the string you see is a non-word.',
-          )}
+          decide if the string you see is a word or not and press a key in response. <br /> Press
+          any key to continue.
         </>
       ),
     },
   },
-  {
-    name: 'LexicalDecicionTask2',
-    type: 'CanvasBlock',
-    props: {
-      timeline: createLDTimeline(LD_LENGTH_TEST),
-      initCanvas,
-    },
-  },
+  ...createMegablockLD(2, LD_LENGTH_TEST, 2),
   { type: 'ExitFullscreen' },
   {
     type: 'Upload',
@@ -527,13 +573,23 @@ const experiment = subsetExperimentByParam([
       trialCSVBuilders: [
         {
           filename: `_DP__${Date.now()}`,
-          trials: ['DotProbeTask', 'DotProbeTaskPractice'],
-          fun: (x) => x,
+          trials: [
+            'DotProbeTaskPractice',
+            'DotProbeTask_Block_1',
+            'DotProbeTask_Block_2',
+            'DotProbeTask_Block_3',
+            'DotProbeTask_Block_4',
+          ],
         },
         {
           filename: `_LD__${Date.now()}`,
-          trials: ['LexicalDecicionTaskPractice', 'LexicalDecicionTask1', 'LexicalDecicionTask2'],
-          fun: (x) => x,
+          trials: [
+            'LexicalDecicionTaskPractice',
+            'LexicalDecicionTask1_Block_1',
+            'LexicalDecicionTask1_Block_2',
+            'LexicalDecicionTask2_Block_1',
+            'LexicalDecicionTask2_Block_2',
+          ],
         },
       ],
     },
