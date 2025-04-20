@@ -836,10 +836,7 @@ const experiment = subsetExperimentByParam([
           anxiety-related questionnaire and tasks in which you are asked to react to words presented
           on the screen with pressing the corresponding keys on the keyboard. No special stress or
           harm is expected as a result of participating in this research project. Participation in
-          the study is remunerated at 10€ per hour, rounded up to the nearest minute. Even if you
-          decide to withdraw from the study, you are still entitled to receive the corresponding
-          remuneration for the time spent up to that point, provided that this can be clearly
-          demonstrated (see section Voluntary participation).
+          the study is remunerated at the rate displayed in Prolific, rounded up to the nearest minute.
           <br />
           <h4>Voluntary participation:</h4>
           Your participation in this research project is voluntary. You can withdraw your consent to
