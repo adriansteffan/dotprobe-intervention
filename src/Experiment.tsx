@@ -93,7 +93,7 @@ const wordPairsDP = [
   ['Injury', 'Button'],
   ['Violence', 'Mushroom'],
   ['Coffin', 'Rocket'],
-  ['Rejected', 'Eevator'],
+  ['Rejected', 'Elevator'],
   ['Danger', 'Breeze'],
   ['Infectious', 'Campground'],
   ['Assault', 'Journey'],
@@ -203,281 +203,308 @@ const wordPairsDP = [
   ['Catastrophic', 'Alternatives'],
   ['Bomb', 'Case'],
   ['Collapse', 'Indirect'],
+  ['Nightmare 	Chocolate'],
+  ['Cheater', 'Earlobe'],
+  ['Betrayal', 'Saturday'],
+  ['Envy', 'Bean'],
+  ['Greed', 'White'],
+  ['Stalker', 'Flowers'],
+  ['Torture', 'Jogging'],
+  ['Uncertain', 'Dishtowel'],
+  ['Canibal', 'Bicycle'],
 ];
 
 const madeUpWords = [
-  'Aqumj',        // Inept
-  'Konam',        // Basic
-  'Qoiqolg',      // Foolish
-  'Psfozow',      // Typical
-  'Ubsuydos',     // Expelled
-  'Jovusexu',     // Moderate
-  'Adehibeecu',   // Inadequate
-  'Igcokmidca',   // Acceptable
-  'Vhalyer',      // Blunder
-  'Ivodize',      // Average
-  'Hapesexv',     // Careless
-  'Cukjtaoh',     // Function
-  'Pakzt',        // Silly
-  'Isoaf',        // Usual
+  'Aqumj', // Inept
+  'Konam', // Basic
+  'Qoiqolg', // Foolish
+  'Psfozow', // Typical
+  'Ubsuydos', // Expelled
+  'Jovusexu', // Moderate
+  'Adehibeecu', // Inadequate
+  'Igcokmidca', // Acceptable
+  'Vhalyer', // Blunder
+  'Ivodize', // Average
+  'Hapesexv', // Careless
+  'Cukjtaoh', // Function
+  'Pakzt', // Silly
+  'Isoaf', // Usual
   'Ujrijlarjpav', // Unsuccessful
-  'Obhelyacuap',  // Information
-  'Melcihath',    // Negligent
-  'Heynedsmi',    // Rectangle
-  'Ajgudaqeic',   // Exmination
-  'Sakalaziel',   // Television
-  'Gfurexomt',    // Stupidity
-  'Yureloud',     // Notebook
-  'Iyzorolp',     // Ignorant
-  'Mejnsabz',     // Backpack
-  'Urqefmorucg',  // Incompetent
+  'Obhelyacuap', // Information
+  'Melcihath', // Negligent
+  'Heynedsmi', // Rectangle
+  'Ajgudaqeic', // Exmination
+  'Sakalaziel', // Television
+  'Gfurexomt', // Stupidity
+  'Yureloud', // Notebook
+  'Iyzorolp', // Ignorant
+  'Mejnsabz', // Backpack
+  'Urqefmorucg', // Incompetent
   'Tinrahaqiqer', // Refrigerator
-  'Livgece',      // Mistake
-  'Wyiwudr',      // Drawers
-  'Diyykalam',    // Disgraced
-  'Wedwaesuj',    // Container
-  'Uraoles',      // Idiotic
-  'Gikokihla',    // Tolerable
-  'Seareze',      // Failure
-  'Mezciwp',      // Library
-  'Ufqowel',      // Ashamed
-  'Gotdalt',      // Pendant
-  'Itqekuay',     // Inferior
-  'Qumaikcu',     // Patience
-  'Owfjazirir',   // Unprepared
-  'Laqvihibab',   // Calculator
-  'Lefq',         // Test
-  'Jnee',         // Tree
-  'Urwosj',       // Unwell
-  'Semxyu',       // Candle
-  'Vugesm',       // Lonely
-  'Qisvef',       // Bucket
-  'Ezwuqv',       // Injury
-  'Ladhoh',       // Button
-  'Daituldi',     // Violence
-  'Poshseak',     // Mushroom
-  'Rippuw',       // Coffin
-  'Verlen',       // Rocket
-  'Menadtas',     // Rejected
-  'Uorarar',      // Eevator
-  'Tobziq',       // Danger
-  'Nmouqu',       // Breeze
-  'Ozjicneuif',   // Infectious
-  'Zusgyfiuhx',   // Campground
-  'Ismiepx',      // Assault
-  'Geiwfil',      // Journey
-  'Milicam',      // Hateful
-  'Lpuqlac',      // Charger
-  'Lajwleq',      // Harmful
-  'Fovkezu',      // Picture
-  'Fewialu',      // Disease
-  'Jaxgasa',      // Luggage
-  'Azphofz',      // Illness
-  'Delqeaj',      // Biscuit
-  'Vuijmoc',      // Painful
-  'Supnicm',      // Factory
-  'Qafseb',       // Lethal
-  'Goozul',       // Peanut
-  'Aycojaj',      // Ignored
-  'Yaguxaz',      // Horizon
-  'Gigavw',       // Hazard
-  'Vaotun',       // Teapot
-  'Urqbusgeya',   // Aggressive
-  'Rehilwtyca',   // Motorcycle
-  'Ahecrupj',     // Alarming
-  'Gooxzeyr',     // Building
-  'Itxax',        // Anger
-  'Zfaiy',        // Chair
-  'Effoujt',      // Anxiety
-  'Supduji',      // Package
-  'Jkedel',       // Brutal
-  'Yujxop',       // Window
-  'Ceggd',        // Bully
-  'Skibt',        // Plant
-  'Bumcoms',      // Burning
-  'Burlopx',      // Pattern
-  'Oqgol',        // Arsen
-  'Lubya',        // Table
-  'Jsiik',        // Chaos
-  'Bsedo',        // Stone
-  'Neltx',        // Fight
-  'Gfipd',        // Clock
+  'Livgece', // Mistake
+  'Wyiwudr', // Drawers
+  'Diyykalam', // Disgraced
+  'Wedwaesuj', // Container
+  'Uraoles', // Idiotic
+  'Gikokihla', // Tolerable
+  'Seareze', // Failure
+  'Mezciwp', // Library
+  'Ufqowel', // Ashamed
+  'Gotdalt', // Pendant
+  'Itqekuay', // Inferior
+  'Qumaikcu', // Patience
+  'Owfjazirir', // Unprepared
+  'Laqvihibab', // Calculator
+  'Lefq', // Test
+  'Jnee', // Tree
+  'Urwosj', // Unwell
+  'Semxyu', // Candle
+  'Vugesm', // Lonely
+  'Qisvef', // Bucket
+  'Ezwuqv', // Injury
+  'Ladhoh', // Button
+  'Daituldi', // Violence
+  'Poshseak', // Mushroom
+  'Rippuw', // Coffin
+  'Verlen', // Rocket
+  'Menadtas', // Rejected
+  'Uorarar', // Eevator
+  'Tobziq', // Danger
+  'Nmouqu', // Breeze
+  'Ozjicneuif', // Infectious
+  'Zusgyfiuhx', // Campground
+  'Ismiepx', // Assault
+  'Geiwfil', // Journey
+  'Milicam', // Hateful
+  'Lpuqlac', // Charger
+  'Lajwleq', // Harmful
+  'Fovkezu', // Picture
+  'Fewialu', // Disease
+  'Jaxgasa', // Luggage
+  'Azphofz', // Illness
+  'Delqeaj', // Biscuit
+  'Vuijmoc', // Painful
+  'Supnicm', // Factory
+  'Qafseb', // Lethal
+  'Goozul', // Peanut
+  'Aycojaj', // Ignored
+  'Yaguxaz', // Horizon
+  'Gigavw', // Hazard
+  'Vaotun', // Teapot
+  'Urqbusgeya', // Aggressive
+  'Rehilwtyca', // Motorcycle
+  'Ahecrupj', // Alarming
+  'Gooxzeyr', // Building
+  'Itxax', // Anger
+  'Zfaiy', // Chair
+  'Effoujt', // Anxiety
+  'Supduji', // Package
+  'Jkedel', // Brutal
+  'Yujxop', // Window
+  'Ceggd', // Bully
+  'Skibt', // Plant
+  'Bumcoms', // Burning
+  'Burlopx', // Pattern
+  'Oqgol', // Arsen
+  'Lubya', // Table
+  'Jsiik', // Chaos
+  'Bsedo', // Stone
+  'Neltx', // Fight
+  'Gfipd', // Clock
   'Tizwzafcebuuw', // Confrontation
   'Iyjanriofbisn', // Entertainment
-  'Webdorq',      // Corrupt
-  'Ezhuupx',      // Already
-  'Zteobk',       // Creepy
-  'Weuvof',       // Leaves
-  'Nwolewuf',     // Criminal
-  'Oxzakiqy',     // Interest
-  'Bgaoy',        // Cruel
-  'Tqagi',        // Plate
-  'Vmogizebj',    // Criticism
-  'Owzutroal',    // Afternoon
-  'Xdapiped',     // Critical
-  'Bakapgos',     // Remember
-  'Kezlttooz',    // Cutthroat
-  'Qeysefapq',    // Discovery
-  'Gofiqo',       // Damage
-  'Dzaepy',       // Should
-  'Hoaqx',        // Death
-  'Xidre',        // Horse
-  'Faumly',       // Deadly
-  'Lerhib',       // Differ
-  'Suvmutyipv',   // Depressing
-  'Cdbemsiwrx',   // Strawberry
-  'Peykibox',     // Depraved
-  'Sdoxejzt',     // Probably
-  'Qiypisemu',    // Desperate
-  'Yzapepode',    // Therefore
-  'Pesvohufeno',  // Destabilize
-  'Ikmpapuguim',  // Application
-  'Muhgdescaox',  // Destruction
-  'Ucecodaulem',  // Educational
-  'Wophayej',     // Dictator
-  'Jefibahn',     // Category
-  'Zoxpadjozb',   // Disgusting
-  'Fubadzyapp',   // Department
-  'Jkgakszik',    // Stressful
-  'Qeewisugy',    // Household
-  'Ludhzobdopl',  // Distressing
-  'Lomjxefyoqo',  // Perspective
-  'Lurhuxtejj',   // Disturbing
-  'Vozjjidrip',   // Newsletter
-  'Woih',         // Doom
-  'Ppxit',        // Screw
-  'Jduaf',        // Dread
-  'Jveob',        // Float
-  'Avepqexhb',    // Emergency
-  'Lqipusjiq',    // Propeller
-  'Zowharif',     // Pandemic
-  'Peyvfoxa',     // Hardware
-  'Neqzeyl',      // Fascism
-  'Wotiruv',      // Cabinet
-  'Canuk',        // Fatal
-  'Birrna',       // Middle
-  'Obgaev',       // Afraid
-  'Dulece',       // Figure
-  'Niotnug',      // Fearful
-  'Rvafwoc',      // Chicken
-  'Qakox',        // Felon
-  'Woeqp',        // Toast
-  'Zolp',         // Hell
-  'Kuer',         // Hair
-  'Luzekegy',     // Hopeless
-  'Jsehjepa',     // Practice
-  'Wenwov',       // Horror
-  'Bakobi',       // Potato
-  'Fitvefu',      // Hostile
-  'Eqemzov',      // Another
-  'Niykwec',      // Hurtful
-  'Jorgugc',      // Gallery
-  'Kmsyemae',     // Hysteria
-  'Ufzowiim',     // Official
-  'Ohg',          // Ill
-  'Etd',          // Egg
-  'Nyyieh',       // Threat
-  'Zbojeq',       // Planet
-  'Cuwnavv',      // Madness
-  'Rojlij',       // Butter
-  'Osjoqapw',     // Insanity
-  'Tqejodec',     // Producer
-  'Pifaag',       // Maniac
-  'Depcpi',       // Bubble
-  'Fuwajz',       // Misery
-  'Nnxigc',       // Spring
-  'Worhugiw',     // Murderer
-  'Iwpusuct',     // Ordinary
-  'Ezfukno',      // Offense
-  'Esitolt',      // Evening
-  'Tatan',        // Panic
-  'Sfirx',        // Whisk
-  'Focudooo',     // Paranoia
-  'Xicutiin',     // Material
-  'Kaecup',       // Poison
-  'Sawxuv',       // Letter
-  'Ydibofog',     // Predator
-  'Ifseopir',     // Optional
-  'Dvutbic',      // Problem
-  'Husoidi',      // Because
-  'Voguqz',       // Punish
-  'Wuzyav',       // Winter
-  'Zuwilim',      // Radical
-  'Hemqeke',      // Formula
-  'Huga',         // Rage
-  'Bbiv',         // Then
-  'Fafc',         // Risk
-  'Fuvs',         // Fact
-  'Xuen',         // Ruin
-  'Sevs',         // Ball
-  'Hiyyfabc',     // Ruthless
-  'Wuobseiz',     // Maintain
-  'Xoskfutf',     // Sickness
-  'Pexkopzj',     // Normally
-  'Rnudq',        // Scary
-  'Yaezs',        // Years
-  'Wcurujor',     // Spiteful
-  'Topksees',     // Portrait
-  'Weksuxrekf',   // Terrifying
-  'Wuphokuhe',    // Signature
-  'Suvvos',       // Terror
-  'Ydieye',       // Cheese
-  'Xehzuzoyp',    // Terrorist
-  'Qidrswosa',    // Landscape
-  'Hanaf',        // Toxic
-  'Uvreq',        // Until
-  'Onpuka',       // Unsafe
-  'Yeapow',       // Sailor
-  'Ficxijelh',    // Turbulent
-  'Daaxoduho',    // Guideline
-  'Olyoryexx',    // Upsetting
-  'Driuvzayz',    // Breakfast
-  'Ibfmokbo',     // Unstable
-  'Zaluubyi',     // Variable
-  'Sore',         // Vile
-  'Cugg',         // Fact
-  'Wed',          // War
-  'Rij',          // Car
-  'Taulal',       // Weapon
-  'Xuhcif',       // Pepper
-  'Msuer',        // Grief
-  'Hpacy',        // Grass
-  'Medxed',       // Killer
-  'Bevuva',       // Tomato
-  'Echr',         // Ugly
-  'Fles',         // Clip
-  'Yezuwurh',     // Military
-  'Depluqim',     // Computer
-  'Unes',         // Evil
-  'Nnofg',        // Slack
-  'Mhan',         // Grim
-  'Xipa',         // Wave
-  'Paxahen',      // Satanic
-  'Gabgoko',      // Gesture
-  'Nkemi',        // Grave
-  'Xozas',        // Water
-  'Yemewisv',     // Lifeless
-  'Ouxkaxe',      // Outside
-  'Jipq',         // Loss
-  'Behe',         // Tide
-  'Niyokjuw',     // Sinister
-  'Vucojyoj',     // Register
-  'Lebeaac',      // Serious
-  'Safwuis',      // Fashion
-  'Jxoiv',        // Blood
-  'Vonet',        // Towel
-  'Cokenu',       // Menace
-  'Vaxbiv',       // Pencil
-  'Gotwqugz',     // Conflict
-  'Asregaws',     // Activity
-  'Mumeqzep',     // Disaster
-  'Katptred',     // Workshop
+  'Webdorq', // Corrupt
+  'Ezhuupx', // Already
+  'Zteobk', // Creepy
+  'Weuvof', // Leaves
+  'Nwolewuf', // Criminal
+  'Oxzakiqy', // Interest
+  'Bgaoy', // Cruel
+  'Tqagi', // Plate
+  'Vmogizebj', // Criticism
+  'Owzutroal', // Afternoon
+  'Xdapiped', // Critical
+  'Bakapgos', // Remember
+  'Kezlttooz', // Cutthroat
+  'Qeysefapq', // Discovery
+  'Gofiqo', // Damage
+  'Dzaepy', // Should
+  'Hoaqx', // Death
+  'Xidre', // Horse
+  'Faumly', // Deadly
+  'Lerhib', // Differ
+  'Suvmutyipv', // Depressing
+  'Cdbemsiwrx', // Strawberry
+  'Peykibox', // Depraved
+  'Sdoxejzt', // Probably
+  'Qiypisemu', // Desperate
+  'Yzapepode', // Therefore
+  'Pesvohufeno', // Destabilize
+  'Ikmpapuguim', // Application
+  'Muhgdescaox', // Destruction
+  'Ucecodaulem', // Educational
+  'Wophayej', // Dictator
+  'Jefibahn', // Category
+  'Zoxpadjozb', // Disgusting
+  'Fubadzyapp', // Department
+  'Jkgakszik', // Stressful
+  'Qeewisugy', // Household
+  'Ludhzobdopl', // Distressing
+  'Lomjxefyoqo', // Perspective
+  'Lurhuxtejj', // Disturbing
+  'Vozjjidrip', // Newsletter
+  'Woih', // Doom
+  'Ppxit', // Screw
+  'Jduaf', // Dread
+  'Jveob', // Float
+  'Avepqexhb', // Emergency
+  'Lqipusjiq', // Propeller
+  'Zowharif', // Pandemic
+  'Peyvfoxa', // Hardware
+  'Neqzeyl', // Fascism
+  'Wotiruv', // Cabinet
+  'Canuk', // Fatal
+  'Birrna', // Middle
+  'Obgaev', // Afraid
+  'Dulece', // Figure
+  'Niotnug', // Fearful
+  'Rvafwoc', // Chicken
+  'Qakox', // Felon
+  'Woeqp', // Toast
+  'Zolp', // Hell
+  'Kuer', // Hair
+  'Luzekegy', // Hopeless
+  'Jsehjepa', // Practice
+  'Wenwov', // Horror
+  'Bakobi', // Potato
+  'Fitvefu', // Hostile
+  'Eqemzov', // Another
+  'Niykwec', // Hurtful
+  'Jorgugc', // Gallery
+  'Kmsyemae', // Hysteria
+  'Ufzowiim', // Official
+  'Ohg', // Ill
+  'Etd', // Egg
+  'Nyyieh', // Threat
+  'Zbojeq', // Planet
+  'Cuwnavv', // Madness
+  'Rojlij', // Butter
+  'Osjoqapw', // Insanity
+  'Tqejodec', // Producer
+  'Pifaag', // Maniac
+  'Depcpi', // Bubble
+  'Fuwajz', // Misery
+  'Nnxigc', // Spring
+  'Worhugiw', // Murderer
+  'Iwpusuct', // Ordinary
+  'Ezfukno', // Offense
+  'Esitolt', // Evening
+  'Tatan', // Panic
+  'Sfirx', // Whisk
+  'Focudooo', // Paranoia
+  'Xicutiin', // Material
+  'Kaecup', // Poison
+  'Sawxuv', // Letter
+  'Ydibofog', // Predator
+  'Ifseopir', // Optional
+  'Dvutbic', // Problem
+  'Husoidi', // Because
+  'Voguqz', // Punish
+  'Wuzyav', // Winter
+  'Zuwilim', // Radical
+  'Hemqeke', // Formula
+  'Huga', // Rage
+  'Bbiv', // Then
+  'Fafc', // Risk
+  'Fuvs', // Fact
+  'Xuen', // Ruin
+  'Sevs', // Ball
+  'Hiyyfabc', // Ruthless
+  'Wuobseiz', // Maintain
+  'Xoskfutf', // Sickness
+  'Pexkopzj', // Normally
+  'Rnudq', // Scary
+  'Yaezs', // Years
+  'Wcurujor', // Spiteful
+  'Topksees', // Portrait
+  'Weksuxrekf', // Terrifying
+  'Wuphokuhe', // Signature
+  'Suvvos', // Terror
+  'Ydieye', // Cheese
+  'Xehzuzoyp', // Terrorist
+  'Qidrswosa', // Landscape
+  'Hanaf', // Toxic
+  'Uvreq', // Until
+  'Onpuka', // Unsafe
+  'Yeapow', // Sailor
+  'Ficxijelh', // Turbulent
+  'Daaxoduho', // Guideline
+  'Olyoryexx', // Upsetting
+  'Driuvzayz', // Breakfast
+  'Ibfmokbo', // Unstable
+  'Zaluubyi', // Variable
+  'Sore', // Vile
+  'Cugg', // Fact
+  'Wed', // War
+  'Rij', // Car
+  'Taulal', // Weapon
+  'Xuhcif', // Pepper
+  'Msuer', // Grief
+  'Hpacy', // Grass
+  'Medxed', // Killer
+  'Bevuva', // Tomato
+  'Echr', // Ugly
+  'Fles', // Clip
+  'Yezuwurh', // Military
+  'Depluqim', // Computer
+  'Unes', // Evil
+  'Nnofg', // Slack
+  'Mhan', // Grim
+  'Xipa', // Wave
+  'Paxahen', // Satanic
+  'Gabgoko', // Gesture
+  'Nkemi', // Grave
+  'Xozas', // Water
+  'Yemewisv', // Lifeless
+  'Ouxkaxe', // Outside
+  'Jipq', // Loss
+  'Behe', // Tide
+  'Niyokjuw', // Sinister
+  'Vucojyoj', // Register
+  'Lebeaac', // Serious
+  'Safwuis', // Fashion
+  'Jxoiv', // Blood
+  'Vonet', // Towel
+  'Cokenu', // Menace
+  'Vaxbiv', // Pencil
+  'Gotwqugz', // Conflict
+  'Asregaws', // Activity
+  'Mumeqzep', // Disaster
+  'Katptred', // Workshop
   'Dobomxyibcul', // Catastrophic
   'Amwuzgopinuy', // Alternatives
-  'Kocb',         // Bomb
-  'Faja',         // Case
-  'Fasjeydi',     // Collapse
-  'Ufkeyuqg'      // Indirect
+  'Kocb', // Bomb
+  'Faja', // Case
+  // 'Fasjeydi', // Collapse
+  // 'Ufkeyuqg', // Indirect
+  // 'Ceqfhcevi', // Nightmare
+  // 'Pwasukebi', // Chocolate
+  // 'Mqaajof', // Cheater
+  // 'Uuvjume', // Earlobe
+  // 'Neytejek', // Betrayal
+  // 'Tawomkin', // Saturday
+  // 'Evvq', // Envy
+  // 'Pait', // Bean
+  // 'Fjiif', // Greed
+  // 'Lwike', // White
+  // 'Hpatyok', // Stalker
+  // 'Lsapitx', // Flowers
+  // 'Niyseto', // Torture
+  // 'Falcars', // Jogging
+  // 'Olpudpauh', // Uncertain
+  // 'Yeqcpatoh', // Dishtowel
+  // 'Fafeder', // Canibal
+  // 'Witqxhi', // Bicycle
 ];
 
 const wordListsLD = {
@@ -488,7 +515,7 @@ const wordListsLD = {
       'number',
       'How many lexical decision trials should be threats',
     ),
-    list: wordPairsDP.map(x => x[0]),
+    list: wordPairsDP.map((x) => x[0]).slice(0, 135),
   },
   neutral: {
     proportion: getParam(
@@ -497,7 +524,7 @@ const wordListsLD = {
       'number',
       'How many lexical decision trials should be neutral',
     ),
-    list: wordPairsDP.map(x => x[1]),
+    list: wordPairsDP.map((x) => x[1]).slice(0, 135),
   },
   nonword: {
     proportion: getParam(
@@ -506,7 +533,7 @@ const wordListsLD = {
       'number',
       'How many lexical decision trials should be non-words',
     ),
-    list: madeUpWords,
+    list: madeUpWords.slice(0, 270),
   },
 };
 
@@ -527,11 +554,13 @@ function createLDTimeline(n: number) {
           .pipe((arr) => {
             if (arr.length === Math.round(val.proportion * n)) {
               console.log(
-                'Number of LD trials as long as trial portion, using provided list as is',
+                `Number of LD trials as long as trial portion, using provided list as is`,
               );
               return arr.shuffle();
             }
-            console.log('Number of LD trials as NOT long as trial portion, sampling');
+            console.log(
+              `Number of LD trials ${arr.length} as NOT long as trial portion ${Math.round(val.proportion * n)}, sampling`,
+            );
             return arr.sample(Math.round(val.proportion * n));
           })
           .map((word) => ({
@@ -573,27 +602,33 @@ function createLDTimeline(n: number) {
 function createDPTimeline(n: number) {
   const adjustedN = n % 2 === 0 ? n : n + 1;
   const threatPercentage = interventionGroup ? 0.1 : 0.5;
-  const threatCount = Math.round(adjustedN * threatPercentage);
+
+  const upperArray = Array.from({ length: adjustedN }, (_, i) => i < adjustedN / 2).shuffle();
+  const threatArray = Array.from(
+    { length: adjustedN },
+    (_, i) => i < Math.round(adjustedN * threatPercentage),
+  ).shuffle();
 
   return [
     ...wordPairsDP
       .pipe((arr) => {
-        if (arr.length === adjustedN) {
-          console.log('Number of DP trials as long as wordpair list, using provided list as is');
-          return arr.shuffle();
+        if (adjustedN % arr.length === 0) {
+          console.log('Number of DP trials is a divisible by wordpair list length, using provided list as is');
+          return Array.from({ length: adjustedN / arr.length }, (_) => arr.shuffle()).flat();
         }
-        console.log('Number of DP trials NOT as long as word list, sampling');
+        console.log(
+          `Number of DP ${adjustedN} trials NOT as long as word list ${arr.length}, sampling`,
+        );
         return arr.sample(adjustedN);
       })
       .map((v, index) => ({
         words: v,
-        upper: index < adjustedN / 2,
+        upper: upperArray[index],
       }))
-      .shuffle()
       .map((v, index) => {
         return {
           ...v,
-          threatDot: index < threatCount,
+          threatDot: threatArray[index],
         };
       })
       .map((v) => ({
@@ -604,7 +639,6 @@ function createDPTimeline(n: number) {
         lowerWord: (v.upper && v.threatDot) || (!v.upper && !v.threatDot) ? v.words[1] : v.words[0],
         interventionGroup: interventionGroup,
       }))
-      .shuffle()
       .map((dpObj: any) => [
         {
           draw: (ctx, w, h) => {
@@ -750,8 +784,8 @@ function createMegablockLD(index: number, ntrials: number, nblocks: number) {
               {i === 0 && (
                 <>
                   <h1>Task A: Get ready</h1>
-                  Get ready for Task A. Just like before, you will have to decide if the
-                  string you see is a word or not and press a key in response. <br />
+                  Get ready for Task A. Just like before, you will have to decide if the string you
+                  see is a word or not and press a key in response. <br />
                 </>
               )}
               {i !== 0 && (
@@ -836,7 +870,8 @@ const experiment = subsetExperimentByParam([
           anxiety-related questionnaire and tasks in which you are asked to react to words presented
           on the screen with pressing the corresponding keys on the keyboard. No special stress or
           harm is expected as a result of participating in this research project. Participation in
-          the study is remunerated at the rate displayed in Prolific, rounded up to the nearest minute.
+          the study is remunerated at the rate displayed in Prolific, rounded up to the nearest
+          minute.
           <br />
           <h4>Voluntary participation:</h4>
           Your participation in this research project is voluntary. You can withdraw your consent to
@@ -1041,9 +1076,9 @@ const experiment = subsetExperimentByParam([
             {KEYS_LD[1].toUpperCase()}
           </kbd>
           . Between the presentation of each word there will be a cross at the center of the screen.
-          Please fixate on that cross while you are doing the task. The first set of Task A
-          will comprise two blocks which take around five minutes each to complete + a short
-          practice block in the beginning. Feel free to take a short break between each block.
+          Please fixate on that cross while you are doing the task. The first set of Task A will
+          comprise two blocks which take around five minutes each to complete + a short practice
+          block in the beginning. Feel free to take a short break between each block.
           <br />{' '}
           {keyInstructions(
             KEYS_LD,
