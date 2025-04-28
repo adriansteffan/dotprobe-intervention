@@ -1210,7 +1210,7 @@ const experiment = subsetExperimentByParam([
       ],
     },
   },
-  { type: 'ProlificEnding', hideSettings: true, props: { prolificCode: 'YOUR_CODE_HERE' } },
+  { type: 'ProlificEnding', hideSettings: true, props: { prolificCode: import.meta.env.VITE_PROLIFIC_CODE } },
 ]);
 
 export default function Experiment() {
