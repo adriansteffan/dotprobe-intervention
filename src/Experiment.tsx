@@ -8,20 +8,6 @@ import {
   canvasCountdown,
 } from '@adriansteffan/reactive';
 
-const KEY_WORD = getParam(
-  'key_ld_word',
-  'm',
-  'string',
-  'what key to use when indicating "word" in LD task',
-);
-const KEY_NON_WORD = getParam(
-  'key_ld_non_word',
-  'x',
-  'string',
-  'what key to use when indicating "non word" in LD task',
-);
-const KEYS_LD = [KEY_WORD, KEY_NON_WORD];
-
 const KEY_UPPER = getParam(
   'key_dp_above',
   'u',
@@ -36,28 +22,29 @@ const KEY_LOWER = getParam(
 );
 const KEYS_DP = [KEY_UPPER, KEY_LOWER];
 
-const LD_LENGTH_PRACTICE = getParam(
-  'number_ld_practice',
-  20,
-  'number',
-  'How many lexical decision trials to practice with',
+const SPLIT_WORD_PAIR_SURVEY = getParam(
+  'split_wordpair_survey',
+  true,
+  'boolean',
+  'Should the wordpair reflection pairs appear on separate pages?',
 );
-const LD_LENGTH_TEST = getParam(
-  'number_ld_test',
-  540,
+
+const WORDPAIR_SURVEY_LENGTH = getParam(
+  'wordpair_survey_len',
+  3,
   'number',
-  'How many lexical decision trials to show in each block',
+  'How many reflection questions are asked at the end to test the intervention',
 );
 
 const DP_LENGTH_PRACTICE = getParam(
   'number_dp_practice',
-  20,
+  10,
   'number',
   'How many dotprobe trials to practice with',
 );
 const DP_LENGTH_TEST = getParam(
   'number_dp_test',
-  580,
+  240,
   'number',
   'How many dotprobe trials to show',
 );
@@ -214,389 +201,13 @@ const wordPairsDP = [
   ['Canibal', 'Bicycle'],
 ];
 
-const madeUpWords = [
-  'Aqumj', // Inept
-  'Konam', // Basic
-  'Qoiqolg', // Foolish
-  'Psfozow', // Typical
-  'Ubsuydos', // Expelled
-  'Jovusexu', // Moderate
-  'Adehibeecu', // Inadequate
-  'Igcokmidca', // Acceptable
-  'Vhalyer', // Blunder
-  'Ivodize', // Average
-  'Hapesexv', // Careless
-  'Cukjtaoh', // Function
-  'Pakzt', // Silly
-  'Isoaf', // Usual
-  'Ujrijlarjpav', // Unsuccessful
-  'Obhelyacuap', // Information
-  'Melcihath', // Negligent
-  'Heynedsmi', // Rectangle
-  'Ajgudaqeic', // Exmination
-  'Sakalaziel', // Television
-  'Gfurexomt', // Stupidity
-  'Yureloud', // Notebook
-  'Iyzorolp', // Ignorant
-  'Mejnsabz', // Backpack
-  'Urqefmorucg', // Incompetent
-  'Tinrahaqiqer', // Refrigerator
-  'Livgece', // Mistake
-  'Wyiwudr', // Drawers
-  'Diyykalam', // Disgraced
-  'Wedwaesuj', // Container
-  'Uraoles', // Idiotic
-  'Gikokihla', // Tolerable
-  'Seareze', // Failure
-  'Mezciwp', // Library
-  'Ufqowel', // Ashamed
-  'Gotdalt', // Pendant
-  'Itqekuay', // Inferior
-  'Qumaikcu', // Patience
-  'Owfjazirir', // Unprepared
-  'Laqvihibab', // Calculator
-  'Lefq', // Test
-  'Jnee', // Tree
-  'Urwosj', // Unwell
-  'Semxyu', // Candle
-  'Vugesm', // Lonely
-  'Qisvef', // Bucket
-  'Ezwuqv', // Injury
-  'Ladhoh', // Button
-  'Daituldi', // Violence
-  'Poshseak', // Mushroom
-  'Rippuw', // Coffin
-  'Verlen', // Rocket
-  'Menadtas', // Rejected
-  'Uorarar', // Eevator
-  'Tobziq', // Danger
-  'Nmouqu', // Breeze
-  'Ozjicneuif', // Infectious
-  'Zusgyfiuhx', // Campground
-  'Ismiepx', // Assault
-  'Geiwfil', // Journey
-  'Milicam', // Hateful
-  'Lpuqlac', // Charger
-  'Lajwleq', // Harmful
-  'Fovkezu', // Picture
-  'Fewialu', // Disease
-  'Jaxgasa', // Luggage
-  'Azphofz', // Illness
-  'Delqeaj', // Biscuit
-  'Vuijmoc', // Painful
-  'Supnicm', // Factory
-  'Qafseb', // Lethal
-  'Goozul', // Peanut
-  'Aycojaj', // Ignored
-  'Yaguxaz', // Horizon
-  'Gigavw', // Hazard
-  'Vaotun', // Teapot
-  'Urqbusgeya', // Aggressive
-  'Rehilwtyca', // Motorcycle
-  'Ahecrupj', // Alarming
-  'Gooxzeyr', // Building
-  'Itxax', // Anger
-  'Zfaiy', // Chair
-  'Effoujt', // Anxiety
-  'Supduji', // Package
-  'Jkedel', // Brutal
-  'Yujxop', // Window
-  'Ceggd', // Bully
-  'Skibt', // Plant
-  'Bumcoms', // Burning
-  'Burlopx', // Pattern
-  'Oqgol', // Arsen
-  'Lubya', // Table
-  'Jsiik', // Chaos
-  'Bsedo', // Stone
-  'Neltx', // Fight
-  'Gfipd', // Clock
-  'Tizwzafcebuuw', // Confrontation
-  'Iyjanriofbisn', // Entertainment
-  'Webdorq', // Corrupt
-  'Ezhuupx', // Already
-  'Zteobk', // Creepy
-  'Weuvof', // Leaves
-  'Nwolewuf', // Criminal
-  'Oxzakiqy', // Interest
-  'Bgaoy', // Cruel
-  'Tqagi', // Plate
-  'Vmogizebj', // Criticism
-  'Owzutroal', // Afternoon
-  'Xdapiped', // Critical
-  'Bakapgos', // Remember
-  'Kezlttooz', // Cutthroat
-  'Qeysefapq', // Discovery
-  'Gofiqo', // Damage
-  'Dzaepy', // Should
-  'Hoaqx', // Death
-  'Xidre', // Horse
-  'Faumly', // Deadly
-  'Lerhib', // Differ
-  'Suvmutyipv', // Depressing
-  'Cdbemsiwrx', // Strawberry
-  'Peykibox', // Depraved
-  'Sdoxejzt', // Probably
-  'Qiypisemu', // Desperate
-  'Yzapepode', // Therefore
-  'Pesvohufeno', // Destabilize
-  'Ikmpapuguim', // Application
-  'Muhgdescaox', // Destruction
-  'Ucecodaulem', // Educational
-  'Wophayej', // Dictator
-  'Jefibahn', // Category
-  'Zoxpadjozb', // Disgusting
-  'Fubadzyapp', // Department
-  'Jkgakszik', // Stressful
-  'Qeewisugy', // Household
-  'Ludhzobdopl', // Distressing
-  'Lomjxefyoqo', // Perspective
-  'Lurhuxtejj', // Disturbing
-  'Vozjjidrip', // Newsletter
-  'Woih', // Doom
-  'Ppxit', // Screw
-  'Jduaf', // Dread
-  'Jveob', // Float
-  'Avepqexhb', // Emergency
-  'Lqipusjiq', // Propeller
-  'Zowharif', // Pandemic
-  'Peyvfoxa', // Hardware
-  'Neqzeyl', // Fascism
-  'Wotiruv', // Cabinet
-  'Canuk', // Fatal
-  'Birrna', // Middle
-  'Obgaev', // Afraid
-  'Dulece', // Figure
-  'Niotnug', // Fearful
-  'Rvafwoc', // Chicken
-  'Qakox', // Felon
-  'Woeqp', // Toast
-  'Zolp', // Hell
-  'Kuer', // Hair
-  'Luzekegy', // Hopeless
-  'Jsehjepa', // Practice
-  'Wenwov', // Horror
-  'Bakobi', // Potato
-  'Fitvefu', // Hostile
-  'Eqemzov', // Another
-  'Niykwec', // Hurtful
-  'Jorgugc', // Gallery
-  'Kmsyemae', // Hysteria
-  'Ufzowiim', // Official
-  'Ohg', // Ill
-  'Etd', // Egg
-  'Nyyieh', // Threat
-  'Zbojeq', // Planet
-  'Cuwnavv', // Madness
-  'Rojlij', // Butter
-  'Osjoqapw', // Insanity
-  'Tqejodec', // Producer
-  'Pifaag', // Maniac
-  'Depcpi', // Bubble
-  'Fuwajz', // Misery
-  'Nnxigc', // Spring
-  'Worhugiw', // Murderer
-  'Iwpusuct', // Ordinary
-  'Ezfukno', // Offense
-  'Esitolt', // Evening
-  'Tatan', // Panic
-  'Sfirx', // Whisk
-  'Focudooo', // Paranoia
-  'Xicutiin', // Material
-  'Kaecup', // Poison
-  'Sawxuv', // Letter
-  'Ydibofog', // Predator
-  'Ifseopir', // Optional
-  'Dvutbic', // Problem
-  'Husoidi', // Because
-  'Voguqz', // Punish
-  'Wuzyav', // Winter
-  'Zuwilim', // Radical
-  'Hemqeke', // Formula
-  'Huga', // Rage
-  'Bbiv', // Then
-  'Fafc', // Risk
-  'Fuvs', // Fact
-  'Xuen', // Ruin
-  'Sevs', // Ball
-  'Hiyyfabc', // Ruthless
-  'Wuobseiz', // Maintain
-  'Xoskfutf', // Sickness
-  'Pexkopzj', // Normally
-  'Rnudq', // Scary
-  'Yaezs', // Years
-  'Wcurujor', // Spiteful
-  'Topksees', // Portrait
-  'Weksuxrekf', // Terrifying
-  'Wuphokuhe', // Signature
-  'Suvvos', // Terror
-  'Ydieye', // Cheese
-  'Xehzuzoyp', // Terrorist
-  'Qidrswosa', // Landscape
-  'Hanaf', // Toxic
-  'Uvreq', // Until
-  'Onpuka', // Unsafe
-  'Yeapow', // Sailor
-  'Ficxijelh', // Turbulent
-  'Daaxoduho', // Guideline
-  'Olyoryexx', // Upsetting
-  'Driuvzayz', // Breakfast
-  'Ibfmokbo', // Unstable
-  'Zaluubyi', // Variable
-  'Sore', // Vile
-  'Cugg', // Fact
-  'Wed', // War
-  'Rij', // Car
-  'Taulal', // Weapon
-  'Xuhcif', // Pepper
-  'Msuer', // Grief
-  'Hpacy', // Grass
-  'Medxed', // Killer
-  'Bevuva', // Tomato
-  'Echr', // Ugly
-  'Fles', // Clip
-  'Yezuwurh', // Military
-  'Depluqim', // Computer
-  'Unes', // Evil
-  'Nnofg', // Slack
-  'Mhan', // Grim
-  'Xipa', // Wave
-  'Paxahen', // Satanic
-  'Gabgoko', // Gesture
-  'Nkemi', // Grave
-  'Xozas', // Water
-  'Yemewisv', // Lifeless
-  'Ouxkaxe', // Outside
-  'Jipq', // Loss
-  'Behe', // Tide
-  'Niyokjuw', // Sinister
-  'Vucojyoj', // Register
-  'Lebeaac', // Serious
-  'Safwuis', // Fashion
-  'Jxoiv', // Blood
-  'Vonet', // Towel
-  'Cokenu', // Menace
-  'Vaxbiv', // Pencil
-  'Gotwqugz', // Conflict
-  'Asregaws', // Activity
-  'Mumeqzep', // Disaster
-  'Katptred', // Workshop
-  'Dobomxyibcul', // Catastrophic
-  'Amwuzgopinuy', // Alternatives
-  'Kocb', // Bomb
-  'Faja', // Case
-  // 'Fasjeydi', // Collapse
-  // 'Ufkeyuqg', // Indirect
-  // 'Ceqfhcevi', // Nightmare
-  // 'Pwasukebi', // Chocolate
-  // 'Mqaajof', // Cheater
-  // 'Uuvjume', // Earlobe
-  // 'Neytejek', // Betrayal
-  // 'Tawomkin', // Saturday
-  // 'Evvq', // Envy
-  // 'Pait', // Bean
-  // 'Fjiif', // Greed
-  // 'Lwike', // White
-  // 'Hpatyok', // Stalker
-  // 'Lsapitx', // Flowers
-  // 'Niyseto', // Torture
-  // 'Falcars', // Jogging
-  // 'Olpudpauh', // Uncertain
-  // 'Yeqcpatoh', // Dishtowel
-  // 'Fafeder', // Canibal
-  // 'Witqxhi', // Bicycle
-];
-
-const wordListsLD = {
-  threat: {
-    proportion: getParam(
-      'ld_proportion_threat',
-      0.25,
-      'number',
-      'How many lexical decision trials should be threats',
-    ),
-    list: wordPairsDP.map((x) => x[0]).slice(0, 135),
-  },
-  neutral: {
-    proportion: getParam(
-      'ld_proportion_neutral',
-      0.25,
-      'number',
-      'How many lexical decision trials should be neutral',
-    ),
-    list: wordPairsDP.map((x) => x[1]).slice(0, 135),
-  },
-  nonword: {
-    proportion: getParam(
-      'ld_proportion_nonword',
-      0.5,
-      'number',
-      'How many lexical decision trials should be non-words',
-    ),
-    list: madeUpWords.slice(0, 270),
-  },
-};
-
-const interventionGroup = Math.random() < 0.5;
+const interventionGroup = true;
 registerArrayExtensions();
 
 function initCanvas(ctx, w, h) {
   ctx.font = `${Math.min(w, h) * canvasFontSizeRatio}px sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-}
-
-function createLDTimeline(n: number) {
-  return [
-    ...Object.entries(wordListsLD)
-      .map(([type, val]) =>
-        val.list
-          .pipe((arr) => {
-            if (arr.length === Math.round(val.proportion * n)) {
-              console.log(
-                `Number of LD trials as long as trial portion, using provided list as is`,
-              );
-              return arr.shuffle();
-            }
-            console.log(
-              `Number of LD trials ${arr.length} as NOT long as trial portion ${Math.round(val.proportion * n)}, sampling`,
-            );
-            return arr.sample(Math.round(val.proportion * n));
-          })
-          .map((word) => ({
-            word,
-            type,
-            correctKey: type === 'nonword' ? KEY_NON_WORD : KEY_WORD,
-          })),
-      )
-      .flat()
-      .shuffle()
-      .map((wordObj: any) => [
-        {
-          draw: (ctx, w, h) => {
-            ctx.fillStyle = 'black';
-            ctx.fillText(wordObj.word, w / 2, h / 2);
-          },
-          allowedKeys: KEYS_LD,
-          metadata: wordObj,
-        },
-        (data: any[]) => {
-          return {
-            draw: (ctx, w, h) => {
-              if (data[data.length - 1].key !== wordObj.correctKey) {
-                ctx.fillStyle = 'RED';
-                ctx.fillText('Error', w / 2, h / 2);
-              } else {
-                ctx.fillText('+', w / 2, h / 2);
-              }
-            },
-            displayDuration: 500,
-            ignoreData: true,
-          };
-        },
-      ])
-      .flat(),
-  ];
 }
 
 function createDPTimeline(n: number) {
@@ -613,7 +224,9 @@ function createDPTimeline(n: number) {
     ...wordPairsDP
       .pipe((arr) => {
         if (adjustedN % arr.length === 0) {
-          console.log('Number of DP trials is a divisible by wordpair list length, using provided list as is');
+          console.log(
+            'Number of DP trials is a divisible by wordpair list length, using provided list as is',
+          );
           return Array.from({ length: adjustedN / arr.length }, (_) => arr.shuffle()).flat();
         }
         console.log(
@@ -769,55 +382,6 @@ function createMegablockDP(ntrials: number, nblocks: number) {
     .flat();
 }
 
-function createMegablockLD(index: number, ntrials: number, nblocks: number) {
-  return createLDTimeline(ntrials)
-    .chunk(nblocks)
-    .map((x) => [...canvasCountdown(3), ...x])
-    .map((timelineChunk, i) => [
-      {
-        type: 'Text',
-        props: {
-          buttonText: null,
-          allowedKeys: KEYS_LD,
-          content: (
-            <>
-              {i === 0 && (
-                <>
-                  <h1>Task A: Get ready</h1>
-                  Get ready for Task A. Just like before, you will have to decide if the string you
-                  see is a word or not and press a key in response. <br />
-                </>
-              )}
-              {i !== 0 && (
-                <>
-                  <h1>
-                    Task A: You have completed {i}/{nblocks} blocks
-                  </h1>
-                  Feel free to take a short break before starting the next block. Continue the trial
-                  once you feel ready <br />
-                </>
-              )}{' '}
-              {keyInstructions(
-                KEYS_LD,
-                'if the string you see is a word.',
-                'if the string you see is a non-word.',
-              )}
-            </>
-          ),
-        },
-      },
-      {
-        name: `LexicalDecicionTask${index}_Block_${i + 1}`,
-        type: 'CanvasBlock',
-        props: {
-          timeline: timelineChunk,
-          initCanvas,
-        },
-      },
-    ])
-    .flat();
-}
-
 const experiment = subsetExperimentByParam([
   {
     name: 'CheckDevice',
@@ -838,14 +402,12 @@ const experiment = subsetExperimentByParam([
       content: (
         <>
           <h1> Welcome to our Study </h1>
-          Welcome to our study about how attention relates to Anxiety. Here is a brief rundown of
-          what you can expect:
-          <br /> First you will be asked to give your consent to participate in this study. Then you
-          will fill out a short questionnaire about your general experience with anxiety. After that
-          the actual experiment starts. There will be Task A and Task B. First you will complete a
-          set of two blocks of Task A, then a set of four blocks of Task B and lastly, another set
-          of two blocks of Task A. Before the first blocks of Task A and B there will be short
-          practice blocks to familiarize yourself with the tasks. <br />
+          Welcome to our study! Here is a brief rundown of what you can expect:
+          <br /> First you will be asked to give your consent to participate in this study. After
+          that the actual experiment starts, in which you will be repeatedly asked to indicate a
+          position of a dot following two presented words. Afterwards, we will ask you a few
+          questions about your experience during the task.
+          <br />
         </>
       ),
     },
@@ -866,7 +428,7 @@ const experiment = subsetExperimentByParam([
           <br />
           <h4>General information about the research project:</h4> <br />
           This study investigates how people make decisions in a multi-attribute situation. The
-          study takes about 45 minutes in total (if no longer breaks are taken) and includes a short
+          study takes about 15 minutes in total (if no longer breaks are taken) and includes a short
           anxiety-related questionnaire and tasks in which you are asked to react to words presented
           on the screen with pressing the corresponding keys on the keyboard. No special stress or
           harm is expected as a result of participating in this research project. Participation in
@@ -967,137 +529,7 @@ const experiment = subsetExperimentByParam([
       ),
     },
   },
-  {
-    name: 'Demographics',
-    type: 'Quest',
-    props: {
-      surveyJson: {
-        title: 'A few questions before we start',
-        showQuestionNumbers: false,
-        pages: [
-          {
-            elements: [
-              {
-                type: 'dropdown',
-                name: 'gender',
-                title: 'What gender do you identify with?',
-                isRequired: true,
-                choices: [
-                  { value: 'male', text: 'Male' },
-                  { value: 'female', text: 'Female' },
-                  { value: 'other', text: 'Other' },
-                  { value: 'prefer_not_to_say', text: 'Prefer not to say' },
-                ],
-              },
-              {
-                type: 'text',
-                name: 'age',
-                title: 'What is your age?',
-                isRequired: true,
-                inputType: 'number',
-                min: 18,
-                max: 100,
-              },
-            ],
-          },
-        ],
-        completeText: 'Submit',
-        showPrevButton: false,
-      },
-    },
-  },
-  {
-    name: 'Anxiety Survey',
-    type: 'Quest',
-    props: {
-      surveyJson: {
-        title: 'A few questions before we start',
-        description:
-          'A number of statements which people have used to describe themselves are given below. Read each statement and then select the number at the end of the statement that indicates HOW YOU GENERALLY FEEL. There are no right or wrong answers. Do not spend too much time on any one statement but give the answer which seems to describe how you generally feel. Thank you.',
-        showQuestionNumbers: false,
-        pages: [
-          {
-            elements: [
-              {
-                name: 'anx_item1',
-                title: 'I feel that difficulties are piling up so I cannot overcome them.',
-              },
-              {
-                name: 'anx_item2',
-                title: "I worry too much over something that really doesn't matter.",
-              },
-              {
-                name: 'anx_item3',
-                title: 'Some unimportant thoughts run through my mind and it bothers me.',
-              },
-              {
-                name: 'anx_item4',
-                title: "I take disappointments so keenly that I can't put them out of my mind.",
-              },
-              {
-                name: 'anx_item5',
-                title:
-                  'I get in a state of tension or turmoil as I think over my recent concerns and interests.',
-              },
-            ].map((x) => ({
-              type: 'rating',
-              name: x.name,
-              title: x.title,
-              isRequired: true,
-              rateMin: 1,
-              rateMax: 4,
-              minRateDescription: 'Not at all',
-              maxRateDescription: 'Very much so',
-            })),
-          },
-        ],
-        completeText: 'Submit',
-        showPrevButton: false,
-      },
-    },
-  },
   { type: 'EnterFullscreen' },
-  {
-    type: 'Text',
-    props: {
-      buttonText: null,
-      allowedKeys: KEYS_LD,
-      content: (
-        <>
-          <h1>Task A Practice</h1>
-          In Task A you must decide if a string of letters you see on the screen is a real English
-          word or not. If it is a <strong>real</strong>, please indicate that by pressing the{' '}
-          <kbd className='px-3 py-2 text-xs font-semibold text-gray-900 bg-white border border-gray-200 rounded-lg shadow-outer'>
-            {KEYS_LD[0].toUpperCase()}
-          </kbd>{' '}
-          key. If you believe the string is a <strong>non-word</strong>/just a string of random
-          letters, indicate that by pressing{' '}
-          <kbd className='px-3 py-2 text-xs font-semibold text-gray-900 bg-white border border-gray-200 rounded-lg shadow-outer'>
-            {KEYS_LD[1].toUpperCase()}
-          </kbd>
-          . Between the presentation of each word there will be a cross at the center of the screen.
-          Please fixate on that cross while you are doing the task. The first set of Task A will
-          comprise two blocks which take around five minutes each to complete + a short practice
-          block in the beginning. Feel free to take a short break between each block.
-          <br />{' '}
-          {keyInstructions(
-            KEYS_LD,
-            'if the string you see is a word.',
-            'if the string you see is a non-word.',
-          )}
-        </>
-      ),
-    },
-  },
-  {
-    name: 'LexicalDecicionTaskPractice',
-    type: 'CanvasBlock',
-    props: {
-      timeline: [...canvasCountdown(3), ...createLDTimeline(LD_LENGTH_PRACTICE)],
-      initCanvas,
-    },
-  },
-  ...createMegablockLD(1, LD_LENGTH_TEST, 2),
   {
     type: 'Text',
     props: {
@@ -1105,8 +537,8 @@ const experiment = subsetExperimentByParam([
       allowedKeys: KEYS_DP,
       content: (
         <>
-          <h1>Task B Practice</h1>
-          In Task B you are presented with a pair of words. One of the words will appear above the
+          <h1>Practice Round</h1>
+          In our task you are presented with a pair of words. One of the words will appear above the
           fixation cross and one will appear below. After a short time the words will disappear and
           a dot will appear in the place of one of the words previously shown. You must indicate if
           the dot appeared below of above the fixation cross. If it appears below the fixation
@@ -1118,7 +550,7 @@ const experiment = subsetExperimentByParam([
           <kbd className='px-3 py-2 text-xs font-semibold text-gray-900 bg-white border border-gray-200 rounded-lg shadow-outer'>
             {KEYS_DP[0].toUpperCase()}
           </kbd>
-          . There will be four blocks that will each take around five minutes to complete + a short
+          . There will be two blocks that will each take around five minutes to complete + a short
           practice block in the beginning. Feel free to take short breaks in between the blocks.{' '}
           <br />{' '}
           {keyInstructions(
@@ -1138,50 +570,106 @@ const experiment = subsetExperimentByParam([
       initCanvas,
     },
   },
-  ...createMegablockDP(DP_LENGTH_TEST, 4),
+  ...createMegablockDP(DP_LENGTH_TEST, 2),
   {
-    type: 'Text',
+    name: 'TaskAwareness',
+    type: 'Quest',
     props: {
-      buttonText: null,
-      allowedKeys: true,
-      content: (
-        <>
-          <h1>One more task</h1>
-          You will now complete the second set of Blocks for Task A. This means you will do the same
-          task again that you did at the beginning of the experiment. As a reminder, here is how it
-          works: In Task A you must decide if a string of letters you see on the screen is a real
-          English word or not. If it is a <strong>real</strong>, please indicate that by pressing
-          the key{' '}
-          <kbd className='px-3 py-2 text-xs font-semibold text-gray-900 bg-white border border-gray-200 rounded-lg shadow-outer'>
-            {KEYS_LD[0].toUpperCase()}
-          </kbd>
-          . If you believe the string is a <strong>non-word</strong>/just a string of random
-          letters, indicate that by pressing{' '}
-          <kbd className='px-3 py-2 text-xs font-semibold text-gray-900 bg-white border border-gray-200 rounded-lg shadow-outer'>
-            {KEYS_LD[1].toUpperCase()}
-          </kbd>
-          . Again, there will be two blocks that each take around five minutes to complete. Feel
-          free to take short breaks in between the blocks. Press any key to start.
-        </>
-      ),
+      surveyJson: {
+        title: 'Noticed anything?',
+        showQuestionNumbers: false,
+        pages: [
+          {
+            elements: [
+              {
+                type: 'comment',
+                name: 'task_awareness',
+                title:
+                  'Did you notice anything about the task that informed how you approach the task?',
+                isRequired: true,
+                placeholder: 'Please share your observations...',
+              },
+            ],
+          },
+        ],
+        completeText: 'Submit',
+        showPrevButton: false,
+      },
     },
   },
-  ...createMegablockLD(2, LD_LENGTH_TEST, 2),
+  ...(SPLIT_WORD_PAIR_SURVEY
+    ? [
+        {
+          name: `WordReplacement`,
+          type: 'Quest',
+          metadata: {bla: "hello"},
+          props: {
+            surveyJson: {
+              title: 'A few more questions',
+              showQuestionNumbers: false,
+              pages: wordPairsDP
+                .shuffle()
+                .slice(0, WORDPAIR_SURVEY_LENGTH)
+                .map((pair, i) => ({
+                  elements: [
+                    {
+                      type: 'radiogroup',
+                      name: `word_pair_${i}`,
+                      title: 'Which word will most likely be replaced by the dot?',
+                      isRequired: true,
+                      choices: [
+                        { value: `threat_${pair[0]}_alternative_${pair[1]}`, text: pair[0] },
+                        { value: `neutral_${pair[1]}_alternative_${pair[0]}`, text: pair[1] },
+                      ].shuffle(),
+                    },
+                  ],
+                })),
+              completeText: 'Submit',
+              showPrevButton: false,
+            },
+          },
+        },
+      ]
+    : [
+        {
+          name: 'WordReplacement',
+          type: 'Quest',
+          props: {
+            surveyJson: {
+              title: 'A few more questions',
+              showQuestionNumbers: false,
+              pages: [
+                {
+                  elements: wordPairsDP
+                    .shuffle()
+                    .slice(0, WORDPAIR_SURVEY_LENGTH)
+                    .map((pair, i) => ({
+                      type: 'radiogroup',
+                      name: `word_pair_${i}`,
+                      title: 'Which word will most likely be replaced by the dot?',
+                      isRequired: true,
+                      choices: [
+                        { value: `threat_${pair[0]}_alternative_${pair[1]}`, text: pair[0] },
+                        { value: `neutral_${pair[1]}_alternative_${pair[0]}`, text: pair[1] },
+                      ].shuffle(),
+                    })),
+                },
+              ],
+              completeText: 'Submit',
+              showPrevButton: false,
+            },
+          },
+        },
+      ]),
   { type: 'ExitFullscreen' },
   {
     type: 'Upload',
     props: {
       sessionCSVBuilder: {
         filename: '',
-        trials: ['Demographics', 'Anxiety Survey', 'CheckDevice'],
+        trials: ['CheckDevice', 'TaskAwareness', 'WordReplacement'],
         fun: (sessionInfo: Record<string, any>) => {
           sessionInfo['interventionGroup'] = interventionGroup;
-          sessionInfo['sum_anxiety'] =
-            sessionInfo.anx_item1 +
-            sessionInfo.anx_item2 +
-            sessionInfo.anx_item3 +
-            sessionInfo.anx_item4 +
-            sessionInfo.anx_item5;
 
           return sessionInfo;
         },
@@ -1189,28 +677,16 @@ const experiment = subsetExperimentByParam([
       trialCSVBuilders: [
         {
           filename: `_DP__${Date.now()}`,
-          trials: [
-            'DotProbeTaskPractice',
-            'DotProbeTask_Block_1',
-            'DotProbeTask_Block_2',
-            'DotProbeTask_Block_3',
-            'DotProbeTask_Block_4',
-          ],
-        },
-        {
-          filename: `_LD__${Date.now()}`,
-          trials: [
-            'LexicalDecicionTaskPractice',
-            'LexicalDecicionTask1_Block_1',
-            'LexicalDecicionTask1_Block_2',
-            'LexicalDecicionTask2_Block_1',
-            'LexicalDecicionTask2_Block_2',
-          ],
+          trials: ['DotProbeTaskPractice', 'DotProbeTask_Block_1', 'DotProbeTask_Block_2'],
         },
       ],
     },
   },
-  { type: 'ProlificEnding', hideSettings: true, props: { prolificCode: import.meta.env.VITE_PROLIFIC_CODE } },
+  {
+    type: 'ProlificEnding',
+    hideSettings: true,
+    props: { prolificCode: import.meta.env.VITE_PROLIFIC_CODE },
+  },
 ]);
 
 export default function Experiment() {
